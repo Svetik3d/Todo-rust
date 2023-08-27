@@ -1,7 +1,3 @@
-3
-a
+1
+Wake up
 false
-b
-false
-ffff
-true

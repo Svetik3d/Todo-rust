@@ -1,17 +1,23 @@
+extern crate ansi_term;
+
 use std::io;
 use std::fs::File;
 use std::io::{Write, Read};
+use ansi_term::{Colour, Style};
+
 
 struct Note {
     text: String,
     active: bool,
 }
 
-fn print_all_todo(v: &Vec<Note>){
-    println!("TODO:");
+fn print_all_todo(v: &Vec<Note>){ 
+    let style_TODO = Colour::Fixed(156);
+    let style_done = Colour::Fixed(40);
+    println!("{}", style_TODO.paint("TODO:"));
     for (i, el) in v.iter().enumerate(){
-        if el.active == true{println!("{}) [ ] -{}", i+1, el.text);}
-        else {println!("{}) [x] -{}", i+1, el.text);}
+        if el.active == true{println!("{}) {}", i+1, el.text);}
+        else {println!("{}) {}", i+1, style_done.paint(el.text.as_str()));}
     }
     if v.len() == 0 {println!("There are no tasks.")};
 }
@@ -94,13 +100,16 @@ fn vec_write(v:Vec<Note>, path:&str){
 }
 
 fn main() {
+    let command_style = Colour::Fixed(73);
+
     let path = "todo.txt";
     let mut todo_list: Vec<Note> = vec_read(path);
 
     loop{
         print_all_todo(&todo_list);
 
-        println!("Enter the command number:
+        println!("
+Enter the command number:
 1. Create a task
 2. Change an existing task
 3. Delete the task
@@ -156,7 +165,8 @@ fn main() {
             }
         } 
         else if command == "0" {
-            println!("Have a productive day!");
+            let style_exit = Colour::Fixed(221);
+            println!("{}", style_exit.paint("Have a productive day!"));
             vec_write(todo_list, path);
             break
         } 
