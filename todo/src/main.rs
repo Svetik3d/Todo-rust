@@ -3,7 +3,7 @@ extern crate ansi_term;
 use std::io;
 use std::fs::File;
 use std::io::{Write, Read};
-use ansi_term::{Colour, Style};
+use ansi_term::Colour;
 
 
 struct Note {
@@ -12,6 +12,7 @@ struct Note {
 }
 
 fn print_all_todo(v: &Vec<Note>){ 
+    println!("");
     let style_TODO = Colour::Fixed(156);
     let style_done = Colour::Fixed(40);
     println!("{}", style_TODO.paint("TODO:"));
